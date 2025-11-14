@@ -3,31 +3,59 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    private PlayerControls controls;
+    [Header("VR Input Actions")]
+    [Tooltip("Ação de movimento (por exemplo, joystick esquerdo).")]
+    public InputActionReference moveAction;
 
-    void Awake()
+    [Tooltip("Ação da mão esquerda (por exemplo, botão de agarrar ou trigger).")]
+    public InputActionReference leftHandAction;
+
+    [Tooltip("Ação da mão direita (por exemplo, botão de agarrar ou trigger).")]
+    public InputActionReference rightHandAction;
+
+    [Header("Configurações de movimento")]
+    public float moveSpeed = 1.5f;
+    public Transform playerBody;
+
+    void Update()
     {
-        controls = new PlayerControls();
+        // Leitura do movimento (joystick esquerdo)
+        if (moveAction != null && moveAction.action != null)
+        {
+            Vector2 moveValue = moveAction.action.ReadValue<Vector2>();
+            Move(moveValue);
+        }
 
-        // Quando o jogador se move (WASD ou analógico)
-        controls.Player.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
-        controls.Player.Move.canceled += ctx => Move(Vector2.zero);
+        // Leitura da ação da mão esquerda
+        if (leftHandAction != null && leftHandAction.action != null)
+        {
+            float leftValue = leftHandAction.action.ReadValue<float>();
+            if (leftValue > 0.1f)
+                LeftAction();
+        }
 
-        // Quando o jogador clica ou faz ação da mão esquerda
-        controls.Player.LeftHandAction.performed += ctx => LeftAction();
-
-        // Quando o jogador clica ou faz ação da mão direita
-        controls.Player.RightHandAction.performed += ctx => RightAction();
+        // Leitura da ação da mão direita
+        if (rightHandAction != null && rightHandAction.action != null)
+        {
+            float rightValue = rightHandAction.action.ReadValue<float>();
+            if (rightValue > 0.1f)
+                RightAction();
+        }
     }
-
-    void OnEnable() => controls.Enable();
-    void OnDisable() => controls.Disable();
 
     void Move(Vector2 direction)
     {
-        Debug.Log("Movimento: " + direction);
-        // Aqui podes mover o jogador, por exemplo:
-        // transform.Translate(new Vector3(direction.x, 0, direction.y) * Time.deltaTime * speed);
+        if (playerBody == null) return;
+
+        // Move o jogador na direção do headset
+        Vector3 forward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z).normalized;
+        Vector3 right = new Vector3(Camera.main.transform.right.x, 0, Camera.main.transform.right.z).normalized;
+
+        Vector3 move = (forward * direction.y + right * direction.x) * moveSpeed * Time.deltaTime;
+        playerBody.Translate(move, Space.World);
+
+        if (direction.magnitude > 0.1f)
+            Debug.Log("Movimento: " + direction);
     }
 
     void LeftAction()
