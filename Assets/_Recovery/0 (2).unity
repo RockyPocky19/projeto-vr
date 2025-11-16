@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e2e99a37749aef43912c156ef90d63b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::cubessystem
-  cubePrefab: {fileID: 2604290294191533297, guid: 5cab7012c50e3b84bbf6d5677fd536f7,
+  cubePrefab: {fileID: 8075690212652714310, guid: 0e764cc4387e8814085094254c58240a,
     type: 3}
 --- !u!4 &136611498
 Transform:
