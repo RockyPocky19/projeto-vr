@@ -12,7 +12,7 @@ public class Cubes : MonoBehaviour
     }
     private int cube_choice()
     {
-        cubeToSkip = Random.Range(1, 7);   // De 1 a 6
+        cubeToSkip = Random.Range(1, 6);   // De 1 a 6
         Debug.Log("Cubo que NÃO será instanciado: " + cubeToSkip);
         return cubeToSkip;
     }

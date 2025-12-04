@@ -17,7 +17,7 @@ public class Cubos : MonoBehaviour
             transform.Translate(Vector3.up * velocidade * Time.deltaTime);
 
             // Quando chegar a certo ponto no Y
-            if (transform.position.y >= 2.5f)
+            if (transform.position.y >= 1.6f)
             {
                 terminouZ = true;
             }
