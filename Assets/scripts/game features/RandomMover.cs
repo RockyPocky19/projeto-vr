@@ -10,6 +10,7 @@ public class RandomMover : MonoBehaviour
 
     void Start()
     {
+        // O spawner já coloca no centro, então só pega o primeiro alvo
         PickNewTarget();
     }
 
