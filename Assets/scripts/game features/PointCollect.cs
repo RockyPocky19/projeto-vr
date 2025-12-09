@@ -3,7 +3,7 @@ using UnityEngine;
 public class PointCollect : MonoBehaviour
 {
     public int pontos = 1;           // quanto vale este objeto
-    public string targetTag = "Player"; // quem precisa tocar (tag do outro objeto)
+    public string targetTag = "ball"; // quem precisa tocar (tag do outro objeto)
 
     private void OnTriggerEnter(Collider other)
     {
